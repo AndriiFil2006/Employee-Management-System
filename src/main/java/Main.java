@@ -1,6 +1,6 @@
 import dao.UserDAO;
 import model.User;
-
+import ui.LoginUI;
 public class Main 
 {
     public static void main(String[] args) {
@@ -39,5 +39,15 @@ public class Main
         System.out.println("Username exists: " + userNameExists);
         userNameExists = userDao.usernameExists("charlie.kirk77");
         System.out.println("Username exists: " + userNameExists);
+
+        LoginUI loginUI = new LoginUI();
+        User loggedInUser = loginUI.login();
+
+        if(loggedInUser != null) {
+            System.out.println("Logged in user: " + loggedInUser.getUsername());
+        }
+        else {
+            System.out.println("Login failed.");
+        }
     }
 }
