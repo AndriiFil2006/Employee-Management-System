@@ -17,29 +17,35 @@ public class Main
 
         UserDAO userDao = new UserDAO();
 
-        User user = userDao.findByUsername("admin");
+        //Test UserDAO methods
 
-        if(user != null) {
-            System.out.println("User Found!");
-            System.out.println("username:" + user.getUsername());
-            System.out.println("roleId: " + user.getRoleId());
-        }
+        // User user = userDao.findByUsername("admin");
 
-        // User newUser = new User(6, 2, "newUser", "passwordHash");
-        // boolean successInsertUser = userDao.insertUser(newUser);
-        // System.out.println("User inserted: " + successInsertUser);
+        // if(user != null) {
+        //     System.out.println("User Found!");
+        //     System.out.println("username:" + user.getUsername());
+        //     System.out.println("roleId: " + user.getRoleId());
+        // }
 
-        boolean successUpdatingLogin = userDao.updateLastLogin(2);
-        System.out.println("Last login updated: " + successUpdatingLogin);
+        // // User newUser = new User(6, 2, "newUser", "passwordHash");
+        // // boolean successInsertUser = userDao.insertUser(newUser);
+        // // System.out.println("User inserted: " + successInsertUser);
 
-        boolean successDeactivatingUser = userDao.deactivateUser(5);
-        System.out.println("User deactivated: " + successDeactivatingUser);
+        // boolean successUpdatingLogin = userDao.updateLastLogin(2);
+        // System.out.println("Last login updated: " + successUpdatingLogin);
 
-        boolean userNameExists = userDao.usernameExists("olivia.d");
-        System.out.println("Username exists: " + userNameExists);
-        userNameExists = userDao.usernameExists("charlie.kirk77");
-        System.out.println("Username exists: " + userNameExists);
+        // boolean successDeactivatingUser = userDao.deactivateUser(5);
+        // System.out.println("User deactivated: " + successDeactivatingUser);
 
+        // boolean userNameExists = userDao.usernameExists("olivia.d");
+        // System.out.println("Username exists: " + userNameExists);
+        // userNameExists = userDao.usernameExists("charlie.kirk77");
+        // System.out.println("Username exists: " + userNameExists);
+
+        // System.out.println(PasswordHasher.hashPassword("admin123"));
+        // System.out.println(PasswordHasher.hashPassword("pass123"));
+
+        
         LoginUI loginUI = new LoginUI();
         User loggedInUser = loginUI.login();
 

@@ -1,9 +1,9 @@
 package ui;
 
 import dao.UserDAO;
-import model.User;
-
 import java.util.Scanner;
+import model.User;
+import util.PasswordHasher;
 
 public class LoginUI {
     private final Scanner scanner;
@@ -40,7 +40,7 @@ public class LoginUI {
             return null;
         }
 
-        if(!password.equals(user.getPasswordHash()))
+        if(!PasswordHasher.verifyPassword(password, user.getPasswordHash()))
         {
             System.out.println("Invalid username or password.");
             return null;
