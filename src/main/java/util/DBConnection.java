@@ -15,7 +15,7 @@ public class DBConnection {
 
         String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName + "?useSSL=true&requireSSL=true";
 
-        System.out.println("URL: " + url);
+        //System.out.println("URL: " + url);
 
         return DriverManager.getConnection(url, user, password);
     }
