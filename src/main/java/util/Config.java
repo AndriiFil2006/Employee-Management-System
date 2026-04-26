@@ -9,9 +9,7 @@ public class Config {
 
     static {
         try {
-            System.out.println("Working directory: " + System.getProperty("user.dir"));
             props.load(new FileInputStream(".env"));
-            System.out.println(".env loaded successfully");
         } catch (IOException e) {
             System.out.println("Could not load .env file: " + e.getMessage());
         }

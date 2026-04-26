@@ -155,4 +155,84 @@ public class EmployeeDAO {
         System.out.println("Division ID: " + employee.getDivisionId());
         System.out.println("Job Title ID: " + employee.getJobTitleId());
     }
+
+    public boolean insertEmployee(Employee employee) {
+    String sql = """
+        INSERT INTO employees
+        (first_name, last_name, dob, ssn, salary, hire_date, division_id, job_title_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """;
+
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, employee.getFirstName());
+        stmt.setString(2, employee.getLastName());
+        stmt.setDate(3, Date.valueOf(employee.getDob()));
+        stmt.setString(4, employee.getSsn());
+        stmt.setDouble(5, employee.getSalary());
+        stmt.setDate(6, Date.valueOf(employee.getHireDate()));
+        stmt.setInt(7, employee.getDivisionId());
+        stmt.setInt(8, employee.getJobTitleId());
+
+        return stmt.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+        System.out.println("Error inserting employee.");
+        e.printStackTrace();
+        return false;
+    }
+}
+
+    public boolean updateEmployee(Employee employee) {
+        String sql = """
+            UPDATE employees
+            SET first_name = ?,
+                last_name = ?,
+                dob = ?,
+                ssn = ?,
+                salary = ?,
+                hire_date = ?,
+                division_id = ?,
+                job_title_id = ?
+            WHERE employee_id = ?
+        """;
+
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, employee.getFirstName());
+            stmt.setString(2, employee.getLastName());
+            stmt.setDate(3, Date.valueOf(employee.getDob()));
+            stmt.setString(4, employee.getSsn());
+            stmt.setDouble(5, employee.getSalary());
+            stmt.setDate(6, Date.valueOf(employee.getHireDate()));
+            stmt.setInt(7, employee.getDivisionId());
+            stmt.setInt(8, employee.getJobTitleId());
+            stmt.setInt(9, employee.employeeId());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error updating employee.");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteEmployee(int employeeId) {
+        String sql = "DELETE FROM employees WHERE employee_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, employeeId);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error deleting employee.");
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

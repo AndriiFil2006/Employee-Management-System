@@ -5,26 +5,30 @@ import util.DBConnection;
 
 public class ReportDAO {
 
-    public void printTotalPayByJobTitle() {
+    public void printTotalPayByJobTitle(String yearMonth) {
         String sql = """
-            SELECT jt.job_title_name, SUM(e.salary) AS total_pay
-            FROM employees e
+            SELECT jt.job_title_name, SUM(p.gross_pay) AS total_pay
+            FROM payroll p
+            JOIN employees e ON p.employee_id = e.employee_id
             JOIN job_titles jt ON e.job_title_id = jt.job_title_id
+            WHERE DATE_FORMAT(p.pay_date, '%Y-%m') = ?
             GROUP BY jt.job_title_name
             ORDER BY jt.job_title_name
         """;
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            System.out.println("\nTotal Pay by Job Title");
-            System.out.println("----------------------");
+            stmt.setString(1, yearMonth);
+            ResultSet rs = stmt.executeQuery();
+
+            System.out.println("\nTotal Pay by Job Title for " + yearMonth);
+            System.out.println("--------------------------------");
 
             while (rs.next()) {
                 System.out.printf("%s: $%.2f%n",
-                    rs.getString("job_title_name"),
-                    rs.getDouble("total_pay"));
+                        rs.getString("job_title_name"),
+                        rs.getDouble("total_pay"));
             }
 
         } catch (SQLException e) {
@@ -33,26 +37,30 @@ public class ReportDAO {
         }
     }
 
-    public void printTotalPayByDivision() {
+    public void printTotalPayByDivision(String yearMonth) {
         String sql = """
-            SELECT d.division_name, SUM(e.salary) AS total_pay
-            FROM employees e
+            SELECT d.division_name, SUM(p.gross_pay) AS total_pay
+            FROM payroll p
+            JOIN employees e ON p.employee_id = e.employee_id
             JOIN divisions d ON e.division_id = d.division_id
+            WHERE DATE_FORMAT(p.pay_date, '%Y-%m') = ?
             GROUP BY d.division_name
             ORDER BY d.division_name
         """;
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            System.out.println("\nTotal Pay by Division");
-            System.out.println("---------------------");
+            stmt.setString(1, yearMonth);
+            ResultSet rs = stmt.executeQuery();
+
+            System.out.println("\nTotal Pay by Division for " + yearMonth);
+            System.out.println("------------------------------");
 
             while (rs.next()) {
                 System.out.printf("%s: $%.2f%n",
-                    rs.getString("division_name"),
-                    rs.getDouble("total_pay"));
+                        rs.getString("division_name"),
+                        rs.getDouble("total_pay"));
             }
 
         } catch (SQLException e) {
