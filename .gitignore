@@ -4,3 +4,5 @@
 !.env.example
 *.local
 *.class
+.DS_Store
+.env

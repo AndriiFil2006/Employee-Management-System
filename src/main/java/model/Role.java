@@ -1,6 +1,6 @@
 package model;
 
-public class Role() {
+public class Role {
     private int roleId;
     private String roleName;
 
